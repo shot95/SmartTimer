@@ -21,11 +21,17 @@ class App extends React.Component {
     this.buttonAction = this.buttonAction.bind(this);
     this.enterAction = this.enterAction.bind(this);
     this.dateAction = this.dateAction.bind(this);
+    this.testAction = this.testAction.bind(this);
   }
 
 
   buttonAction() {
     axios.post('http://localhost:34560/api/addtimestamp', { date: '02.02.1997', module: 'm1', rectime: 54, username: 'jonathan' });
+  }
+
+  async testAction() {
+    let res = await axios.post('http://localhost:34560/api/sync', { username: 'jonathan' });
+    console.log(JSON.stringify(res.data, null, 2))
   }
   
   enterAction() {
@@ -62,6 +68,9 @@ class App extends React.Component {
                 </div>
                 <div>
                   <button id="testButton" onClick={this.buttonAction}  disabled={this.state.userName === ''}>addtimestamp</button>
+                </div>
+                <div>
+                  <button id="test2Button" onClick={this.testAction}  disabled={this.state.userName === ''}>test sync</button>
                 </div>
                 <div>
                   <Link to="/dailysummary">
