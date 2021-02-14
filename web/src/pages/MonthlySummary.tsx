@@ -31,21 +31,27 @@ class MonthlySummary extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Monthly Summary
+                    Monthly Summary for {this.props.appState.date.substring(3,10)}
+                </div>
+                <div>
+                    <span>Module name</span>
+                    <span>time</span>
                 </div>
 
                 {
                     this.props.appState.userName === '' && this.props.appState.date === '' ? null :
                         this.props.appState.getModulesAsList().map((module) => {
-                            let sum = 0;
+                            let sum = 0.0;
                             console.log(`${this.props.appState.date.substring(3,10)}`)
                             module.timeStamps.filter((ts) => ts.date.substring(3,10) === this.props.appState.date.substring(3,10)).forEach((val, ind, arr) => {
                                 sum += val.recordedTime;
                             })
+                            sum /= 60;
+                            sum /= 60;
                             return (
                                 <div key={module.id}>
                                     <span>{module.name || '?'}</span>
-                                    <span>{sum}</span>
+                                    <span>{sum.toFixed(1)}hours</span>
                                 </div>
                             );
                         })

@@ -38,17 +38,21 @@ class Modules extends React.Component<PageProps>{
                         <button id="addButton" disabled={this.props.appState.userName === ''}>Add</button>
                     </Link>
                 </div>
+                <div>
+                    <span>Module name</span>
+                    <span>Button Id</span>
+                    <span>Modul Id</span>
+                </div>
                 {
-                    this.props.appState.userName === '' ? null :
-                        this.props.appState.getModulesAsList().map((module) => {
-                            return (
-                                <div key={module.id}>
-                                    <span>{module.name || '?'}</span>
-                                    <span>{module.buttonID}</span>
-                                    <span>{module.id}</span>
-                                </div>
-                            );
-                        })
+                    this.props.appState.getModulesAsList().map((module) => {
+                        return (
+                            <div key={module.id}>
+                                <span>{module.name || '?'}</span>
+                                <span>{module.buttonID}</span>
+                                <span>{module.id}</span>
+                            </div>
+                        );
+                    })
                 }
             </div>
         );

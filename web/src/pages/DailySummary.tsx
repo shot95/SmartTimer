@@ -31,20 +31,26 @@ class DailySummary extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Daily Summary
+                    Daily Summary for {this.props.appState.date}
+                </div>
+            
+                <div>
+                    <span>Module name</span>
+                    <span>time</span>
                 </div>
                 
                 {
                     this.props.appState.userName === '' && this.props.appState.date === ''? null :
                     this.props.appState.getModulesAsList().map((module) => {
-                        let sum = 0;
+                        let sum = 0.0;
                         module.timeStamps.filter((ts) => ts.date === this.props.appState.date).forEach((val, ind, arr) => {
                             sum += val.recordedTime;
                         })
+                        sum /= 60;
                         return(
                             <div key={module.id}>
                                 <span>{module.name || '?'}</span>
-                                <span>{sum}</span>
+                                <span>{sum.toFixed(1)}min</span>
                             </div>
                         );
                     })

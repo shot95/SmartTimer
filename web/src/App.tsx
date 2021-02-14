@@ -18,20 +18,8 @@ class App extends React.Component {
   constructor(props: any) {
     super(props);
     this.setState = this.setState.bind(this);
-    this.buttonAction = this.buttonAction.bind(this);
     this.enterAction = this.enterAction.bind(this);
     this.dateAction = this.dateAction.bind(this);
-    this.testAction = this.testAction.bind(this);
-  }
-
-
-  buttonAction() {
-    axios.post('http://localhost:34560/api/addtimestamp', { date: '02.02.1997', module: 'm1', rectime: 54, username: 'jonathan' });
-  }
-
-  async testAction() {
-    let res = await axios.post('http://localhost:34560/api/sync', { username: 'jonathan' });
-    console.log(JSON.stringify(res.data, null, 2))
   }
   
   enterAction() {
@@ -56,35 +44,29 @@ class App extends React.Component {
                 { this.state.userName === '' ? <button id="userNameButton" onClick={this.enterAction}>enter</button> : null }
                   
                 </div>
-                <div>{ this.state.date === '' ? <input id="dateInput" placeholder="Date?" /> : null }</div>
+                <div><input id="dateInput" placeholder="dd.mm.yyyy?" defaultValue={this.state.date}/></div>
                 <div>
-                { this.state.date === '' ? <button id="dateButton" onClick={this.dateAction}>enter date</button> : null }
+                <button id="dateButton" onClick={this.dateAction}>enter date</button>
                   
                 </div>
                 <div>
                   <Link to="/modules">
-                    <button id="modulesButton" disabled={this.state.userName === ''}>modules</button>
+                    <button id="modulesButton" disabled={this.state.userName === ''}>Modules</button>
                   </Link>
                 </div>
                 <div>
-                  <button id="testButton" onClick={this.buttonAction}  disabled={this.state.userName === ''}>addtimestamp</button>
-                </div>
-                <div>
-                  <button id="test2Button" onClick={this.testAction}  disabled={this.state.userName === ''}>test sync</button>
-                </div>
-                <div>
                   <Link to="/dailysummary">
-                    <button id="dailySummaryButton"  disabled={this.state.userName === ''}>DailySummary</button>
+                    <button id="dailySummaryButton"  disabled={this.state.userName === '' && this.state.date === ''}>Daily Summary</button>
                   </Link>
                 </div>
                 <div>
                   <Link to="/monthlysummary">
-                    <button id="monthlySummaryButton"  disabled={this.state.userName === ''}>monthlysummary</button>
+                    <button id="monthlySummaryButton"  disabled={this.state.userName === '' && this.state.date === ''}>Monthly Summary</button>
                   </Link>
                 </div>
                 <div>
                   <Link to="/yearlysummary">
-                    <button id="yearlySummaryButton"  disabled={this.state.userName === ''}>yearlysummary</button>
+                    <button id="yearlySummaryButton"  disabled={this.state.userName === '' && this.state.date === ''}>Yearly Summary</button>
                   </Link>
                 </div>
               </div>
