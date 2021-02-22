@@ -20,40 +20,34 @@ class App extends React.Component {
     this.setState = this.setState.bind(this);
     this.enterAction = this.enterAction.bind(this);
     this.dateAction = this.dateAction.bind(this);
+    this.newData = this.newData.bind(this);
   }
 
   async newData() {
-    await axios.post('http://localhost:34560/api/addtimestamp', {
-      date: '2021-01-03T12:00:00.000Z',
-      module: 'm1',
-      rectime: 20 * 60,
-      username: 'jonathan'
-    });
-    await axios.post('http://localhost:34560/api/addtimestamp', {
-      date: '2021-01-03T13:00:00.000Z',
-      module: 'm1',
-      rectime: 30 * 60,
-      username: 'jonathan'
-    });
-    await axios.post('http://localhost:34560/api/addtimestamp', {
-      date: '2021-01-03T15:00:00.000Z',
-      module: 'm1',
-      rectime: 10 * 60,
-      username: 'jonathan'
-    });
-
-    await axios.post('http://localhost:34560/api/addtimestamp', {
-      date: '2021-01-03T08:32:10.000Z',
-      module: 'm2',
-      rectime: 20 * 60,
-      username: 'jonathan'
-    });
-    await axios.post('http://localhost:34560/api/addtimestamp', {
-      date: '2021-01-03T12:32:10.120Z',
-      module: 'm2',
-      rectime: 40 * 60,
-      username: 'jonathan'
-    });
+    for (let months = 3; months < 11; months++) {
+      for (let days = 1; days < 29; days++) {
+        for (let hrs = 7; hrs < 16; hrs++) {
+          let random = Math.floor(Math.random() * (60 * 60) + 1);
+          await axios.post('http://localhost:34560/api/addtimestamp', {
+            date: `2021-${this.pad(months, 2)}-${this.pad(days, 2)}T${this.pad(hrs, 2)}:00:00.000Z`,
+            module: 'm1',
+            rectime: random,
+            username: 'jonathan'
+          });
+          await axios.post('http://localhost:34560/api/addtimestamp', {
+            date: `2021-${this.pad(months, 2)}-${this.pad(days, 2)}T${this.pad(hrs, 2)}:00:00.000Z`,
+            module: 'm2',
+            rectime: (60*60) - random,
+            username: 'jonathan'
+          });
+        }
+      }
+    }
+  }
+  pad(num: number, size: number): string {
+    let s = num + "";
+    while (s.length < size) s = "0" + s;
+    return s;
   }
 
   enterAction() {
