@@ -21,7 +21,41 @@ class App extends React.Component {
     this.enterAction = this.enterAction.bind(this);
     this.dateAction = this.dateAction.bind(this);
   }
-  
+
+  async newData() {
+    await axios.post('http://localhost:34560/api/addtimestamp', {
+      date: '2021-01-03T12:00:00.000Z',
+      module: 'm1',
+      rectime: 20 * 60,
+      username: 'jonathan'
+    });
+    await axios.post('http://localhost:34560/api/addtimestamp', {
+      date: '2021-01-03T13:00:00.000Z',
+      module: 'm1',
+      rectime: 30 * 60,
+      username: 'jonathan'
+    });
+    await axios.post('http://localhost:34560/api/addtimestamp', {
+      date: '2021-01-03T15:00:00.000Z',
+      module: 'm1',
+      rectime: 10 * 60,
+      username: 'jonathan'
+    });
+
+    await axios.post('http://localhost:34560/api/addtimestamp', {
+      date: '2021-01-03T08:32:10.000Z',
+      module: 'm2',
+      rectime: 20 * 60,
+      username: 'jonathan'
+    });
+    await axios.post('http://localhost:34560/api/addtimestamp', {
+      date: '2021-01-03T12:32:10.120Z',
+      module: 'm2',
+      rectime: 40 * 60,
+      username: 'jonathan'
+    });
+  }
+
   enterAction() {
     const name = $('#userNameInput').val() as string;
     this.setState({ userName: name });
@@ -29,7 +63,9 @@ class App extends React.Component {
 
   dateAction() {
     const date = $('#dateInput').val() as string;
-    this.setState({ date: date });
+    const isoString = `${date.substring(6, 10)}-${date.substring(3, 5)}-${date.substring(0, 2)}T00:00:00.000Z`;
+    //YYYY-MM-DDTHH:mm:ss.sssZ
+    this.setState({ date: isoString });
   }
 
   render() {
@@ -39,15 +75,19 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/main">
               <div className="App">
-                <div>{ this.state.userName === '' ? <input id="userNameInput" placeholder="Username?" /> : null }</div>
+                <div>{this.state.userName === '' ? <input id="userNameInput" placeholder="Username?" /> : null}</div>
                 <div>
-                { this.state.userName === '' ? <button id="userNameButton" onClick={this.enterAction}>enter</button> : null }
-                  
+                  {this.state.userName === '' ? <button id="userNameButton" onClick={this.enterAction}>enter</button> : null}
+
                 </div>
-                <div><input id="dateInput" placeholder="dd.mm.yyyy?" defaultValue={this.state.date}/></div>
+                <div><input id="dateInput" placeholder="dd.mm.yyyy?" defaultValue={this.state.date} /></div>
                 <div>
-                <button id="dateButton" onClick={this.dateAction}>enter date</button>
-                  
+                  <button id="dateButton" onClick={this.dateAction}>enter date</button>
+
+                </div>
+                <div>
+                  <button id="newDataButton" onClick={this.newData}>new data</button>
+
                 </div>
                 <div>
                   <Link to="/modules">
@@ -56,17 +96,17 @@ class App extends React.Component {
                 </div>
                 <div>
                   <Link to="/dailysummary">
-                    <button id="dailySummaryButton"  disabled={this.state.userName === '' && this.state.date === ''}>Daily Summary</button>
+                    <button id="dailySummaryButton" disabled={this.state.userName === '' && this.state.date === ''}>Daily Summary</button>
                   </Link>
                 </div>
                 <div>
                   <Link to="/monthlysummary">
-                    <button id="monthlySummaryButton"  disabled={this.state.userName === '' && this.state.date === ''}>Monthly Summary</button>
+                    <button id="monthlySummaryButton" disabled={this.state.userName === '' && this.state.date === ''}>Monthly Summary</button>
                   </Link>
                 </div>
                 <div>
                   <Link to="/yearlysummary">
-                    <button id="yearlySummaryButton"  disabled={this.state.userName === '' && this.state.date === ''}>Yearly Summary</button>
+                    <button id="yearlySummaryButton" disabled={this.state.userName === '' && this.state.date === ''}>Yearly Summary</button>
                   </Link>
                 </div>
               </div>

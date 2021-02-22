@@ -19,6 +19,7 @@ export default class AppState {
     this.loadModulesFromServer = this.loadModulesFromServer.bind(this);
     this.getModulesAsList = this.getModulesAsList.bind(this);
     this.loadTimeStampsFromServer = this.loadTimeStampsFromServer.bind(this);
+    this.getFromModules = this.getFromModules.bind(this);
   }
 
   getModulesAsList(){
@@ -47,6 +48,10 @@ export default class AppState {
     module.sumTime = sumTime;
 
     return module;
+  }
+
+  getFromModules(id: string){
+    return this.modules.get(id);
   }
 
   getOrCreateModule(id: string) {
