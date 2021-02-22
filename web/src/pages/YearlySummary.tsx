@@ -1,3 +1,4 @@
+import Chart from "chart.js";
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import Module from "../model/Module";
@@ -20,6 +21,98 @@ class YearlySummary extends React.Component<PageProps>{
         console.log('DailySummary.tsx didmount called');
         await this.props.appState.loadTimeStampsFromServer(this.props.appState.userName);
         this.props.appSetState({ modules: this.props.appState.modules });
+        
+        let searchDate = new Date(this.props.appState.date);
+        const datasets = this.props.appState.getModulesAsList().map((val, ind, arr) => {
+            const yValues = [];
+            const label = val.name;
+            let values = new Map<string, number>();
+            const timeStamps = val.timeStamps;
+            timeStamps.forEach((ts, ind, timestamps) => {
+                searchDate = new Date(this.props.appState.date);
+                const date = new Date(ts.date);
+                if (searchDate.getUTCFullYear() === date.getUTCFullYear()) {
+
+                    //for each month
+                    date.setUTCMilliseconds(0);
+                    date.setUTCSeconds(0);
+                    date.setUTCMinutes(0);
+                    date.setUTCHours(0);
+                    date.setUTCDate(1);
+
+                    let tmp = values.get(date.toISOString());
+                    if (!tmp) {
+                        values.set(date.toISOString(), ts.recordedTime);
+                        return;
+                    }
+                    values.set(date.toISOString(), tmp + ts.recordedTime);
+
+                }
+            });
+
+            searchDate.setUTCDate(1);
+            for (let i = 1; i < 13; i++) {
+                searchDate.setUTCMonth(i);
+                const currentDateString = searchDate.toISOString();
+                const currentValue = values.get(currentDateString);
+                if (!currentValue) {
+                    yValues.push(0);
+                    continue;
+                }
+                yValues.push(currentValue / 60 / 60 / 8);
+            }
+
+            const dataset = {
+                label: label,
+                data: yValues,
+                borderColor: this.getHexColor(val.buttonID),
+                fill: false
+            }
+
+            return dataset;
+        });
+
+        const xValues = [];
+        for (let i = 1; i < 13; i++) {
+            /*searchDate.setUTCHours(i);
+            const currentDateString = searchDate.toISOString();
+            xValues.push(currentDateString);*/
+            xValues.push(`month ${i}`);
+        }
+
+        Chart.defaults.global.maintainAspectRatio = false;
+        Chart.defaults.global.responsive = false;
+        var ctx: any = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: xValues,
+                datasets: datasets
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: 'Working time per module (in working days)'
+                }
+            }
+        });
+        Chart.defaults.global.maintainAspectRatio = false;
+        Chart.defaults.global.responsive = false;
+    }
+
+    getHexColor(color: string) {
+        switch (color) {
+            case 'blue': return '#3e95cd';
+            case 'red': return '#ff2d00';
+            default: return '#000000';
+        }
     }
 
     render() {
@@ -31,7 +124,7 @@ class YearlySummary extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Yearly Summary for {this.props.appState.date.substring(6,10)}
+                    Yearly Summary for {this.props.appState.date.substring(0,4)}
                 </div>
                 <div>
                     <span>Module name</span>
@@ -42,8 +135,11 @@ class YearlySummary extends React.Component<PageProps>{
                     this.props.appState.userName === '' && this.props.appState.date === '' ? null :
                         this.props.appState.getModulesAsList().map((module) => {
                             let sum = 0.0;
-                            console.log(`${this.props.appState.date.substring(6, 10)}`)
-                            module.timeStamps.filter((ts) => ts.date.substring(6, 10) === this.props.appState.date.substring(6, 10)).forEach((val, ind, arr) => {
+                            module.timeStamps.filter((ts) => {
+                                const tsDate = new Date(ts.date);
+                                const searchDate = new Date(this.props.appState.date);
+                                return tsDate.getUTCFullYear() === searchDate.getUTCFullYear()
+                            }).forEach((val, ind, arr) => {
                                 sum += val.recordedTime;
                             })
                             sum /= 60;
@@ -57,6 +153,8 @@ class YearlySummary extends React.Component<PageProps>{
                             );
                         })
                 }
+
+                <canvas id="myChart" width="1000" height="400"></canvas>
             </div>
         );
     }

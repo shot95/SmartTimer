@@ -22,7 +22,7 @@ class MonthlySummary extends React.Component<PageProps>{
         await this.props.appState.loadTimeStampsFromServer(this.props.appState.userName);
         this.props.appSetState({ modules: this.props.appState.modules });
 
-        const searchDate = new Date(this.props.appState.date);
+        let searchDate = new Date(this.props.appState.date);
         searchDate.setUTCDate(1);
         let maxDays = searchDate.getUTCMonth() % 2 ? 31 : 32;
         if (searchDate.getUTCMonth() === 2) maxDays = 29;
@@ -32,7 +32,7 @@ class MonthlySummary extends React.Component<PageProps>{
             let values = new Map<string, number>();
             const timeStamps = val.timeStamps;
             timeStamps.forEach((ts, ind, timestamps) => {
-
+                searchDate = new Date(this.props.appState.date);
                 const date = new Date(ts.date);
                 if (searchDate.getUTCFullYear() === date.getUTCFullYear()
                     && searchDate.getUTCMonth() === date.getUTCMonth()) {
@@ -101,7 +101,7 @@ class MonthlySummary extends React.Component<PageProps>{
                 },
                 title: {
                     display: true,
-                    text: 'Working time per module (in minutes)'
+                    text: 'Working time per module (in hours)'
                 }
             }
         });
@@ -126,7 +126,7 @@ class MonthlySummary extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Monthly Summary for {this.props.appState.date.substring(3, 10)}
+                    Monthly Summary for {this.props.appState.date.substring(5, 7)}
                 </div>
                 <div>
                     <span>Module name</span>
@@ -137,7 +137,6 @@ class MonthlySummary extends React.Component<PageProps>{
                     this.props.appState.userName === '' && this.props.appState.date === '' ? null :
                         this.props.appState.getModulesAsList().map((module) => {
                             let sum = 0.0;
-                            console.log(`${this.props.appState.date.substring(3, 10)}`)
                             module.timeStamps.filter((ts) => {
                                 const tsDate = new Date(ts.date);
                                 const searchDate = new Date(this.props.appState.date);

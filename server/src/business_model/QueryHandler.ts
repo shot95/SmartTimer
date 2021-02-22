@@ -49,7 +49,7 @@ export default class QueryHandler {
        }*/
 
 
-       console.log(`Queryhandler sends: ${JSON.stringify(result.eventList, null, 2)}`);
+       //console.log(`Queryhandler sends: ${JSON.stringify(result.eventList, null, 2)}`);
        res.json(result);
     }
 

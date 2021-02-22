@@ -25,14 +25,14 @@ class DailySummary extends React.Component<PageProps>{
         await this.props.appState.loadTimeStampsFromServer(this.props.appState.userName);
         this.props.appSetState({ modules: this.props.appState.modules });
 
-        const searchDate = new Date(this.props.appState.date);
+        let searchDate = new Date(this.props.appState.date);
         const datasets = this.props.appState.getModulesAsList().map((val, ind, arr) => {
             const yValues = [];
             const label = val.name;
             let values = new Map<string, number>();
             const timeStamps = val.timeStamps;
             timeStamps.forEach((ts, ind, timestamps) => {
-
+                searchDate = new Date(this.props.appState.date);
                 const date = new Date(ts.date);
                 if (searchDate.getUTCFullYear() === date.getUTCFullYear()
                     && searchDate.getUTCMonth() === date.getUTCMonth()
