@@ -40,9 +40,9 @@ class DailySummary extends React.Component<PageProps>{
                     && searchDate.getUTCDay() === date.getUTCDay()) {
 
                     //for each hour
-                    date.setMilliseconds(0);
-                    date.setSeconds(0);
-                    date.setMinutes(0);
+                    date.setUTCMilliseconds(0);
+                    date.setUTCSeconds(0);
+                    date.setUTCMinutes(0);
 
                     let tmp = values.get(date.toISOString());
                     if (!tmp) {
@@ -54,14 +54,14 @@ class DailySummary extends React.Component<PageProps>{
                 }
             });
             for (let i = 0; i < 24; i++) {
-                searchDate.setHours(i);
+                searchDate.setUTCHours(i);
                 const currentDateString = searchDate.toISOString();
                 const currentValue = values.get(currentDateString);
                 if (!currentValue) {
                     yValues.push(0);
                     continue;
                 }
-                yValues.push(currentValue);
+                yValues.push(currentValue / 60);
             }
 
             const dataset = {
@@ -76,9 +76,10 @@ class DailySummary extends React.Component<PageProps>{
 
         const xValues = [];
         for (let i = 0; i < 24; i++) {
-            searchDate.setHours(i);
+            /*searchDate.setUTCHours(i);
             const currentDateString = searchDate.toISOString();
-            xValues.push(currentDateString);
+            xValues.push(currentDateString);*/
+            xValues.push(`${i}h`);
         }
 
         Chart.defaults.global.maintainAspectRatio = false;
@@ -97,6 +98,10 @@ class DailySummary extends React.Component<PageProps>{
                             beginAtZero: true
                         }
                     }]
+                },
+                title: {
+                    display: true,
+                    text: 'Working time per module (in minutes)'
                 }
             }
         });
@@ -104,10 +109,10 @@ class DailySummary extends React.Component<PageProps>{
         Chart.defaults.global.responsive = false;
     }
 
-    getHexColor(color: string){
-        switch(color){
+    getHexColor(color: string) {
+        switch (color) {
             case 'blue': return '#3e95cd';
-            case 'red' : return  '#ff2d00';
+            case 'red': return '#ff2d00';
             default: return '#000000';
         }
     }
@@ -163,7 +168,7 @@ class DailySummary extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Daily Summary for {this.props.appState.date}
+                    Daily Summary for {this.props.appState.date.substring(0,10)}
                 </div>
 
                 <div>
