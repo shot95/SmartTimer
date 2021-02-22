@@ -11,7 +11,6 @@ class DailySummary extends React.Component<PageProps>{
     constructor(props: PageProps) {
         super(props);
         this.newDateValue = this.newDateValue.bind(this);
-        this.getLineChart = this.getLineChart.bind(this);
         this.getHexColor = this.getHexColor.bind(this);
     }
 
@@ -117,40 +116,6 @@ class DailySummary extends React.Component<PageProps>{
         }
     }
 
-    getLineChart(id: string) {
-        let data = new Map<string, number>();
-        /*for (let mod of this.props.appState.getModulesAsList()){
-            for (let ts of mod.timeStamps){
-                const date = ts.date;
-                let tmp = data.get(date);
-                if (!tmp){
-                    data.set(date, ts.recordedTime);
-                } else {
-                    data.set(date, tmp+ts.recordedTime);
-                }
-            }
-        }*/
-        const module = this.props.appState.getFromModules(id);
-
-        module!.timeStamps.forEach((val, ind, arr) => {
-            const date = val.date;
-            let tmp = data.get(date);
-            if (!tmp) {
-                data.set(date, val.recordedTime);
-            } else {
-                data.set(date, tmp + val.recordedTime);
-            }
-        });
-
-        let resData: [x: number, y: number][] = [];
-        data.forEach((val, key, map) => resData.push([this.newDateValue(key), val]))
-        console.log(`Data: ${JSON.stringify(resData, null, 2)}`);
-        line({
-            canvas: document.querySelector("canvas")!,
-            data: resData
-        });
-    }
-
     newDateValue(date: string) {
         const day = date.substring(0, 2);
         const month = date.substring(3, 5);
@@ -191,7 +156,7 @@ class DailySummary extends React.Component<PageProps>{
                             })
                             sum /= 60;
                             return (
-                                <div key={module.id} onClick={() => this.getLineChart(module.id)}>
+                                <div key={module.id}>
                                     <span>{module.name || '?'}</span>
                                     <span>{sum.toFixed(1)}min</span>
                                 </div>
