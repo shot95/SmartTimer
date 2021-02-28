@@ -20,8 +20,6 @@ interface ClientData {
 
 export default class AddTimeStampHandler {
 
-    constructor() {
-    }
 
     async handle(req: express.Request, res: express.Response) {
         const clientData: ClientData = req.body;
@@ -43,7 +41,7 @@ export default class AddTimeStampHandler {
             payload: timeStampDTO
         }
 
-        submitHandler.handlers.get('timestamps').handle(event);
+        await submitHandler.handlers.get('timestamps').handle(event);
 
         const result = {
             status: 'OK',

@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.options("*", cors());
 
-export const port = 34560;
+export const port = process.env.PORT || 34560;
 
 app.post("/api/submit", async (req:express.Request, res:express.Response) => {
     await submitHandler.handle(req,res);

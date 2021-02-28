@@ -19,8 +19,8 @@ interface ClientData {
 export default class SyncHandler {
 
     submitHandler: SubmitHandler;
-    constructor(submitHandler: SubmitHandler) {
-        this.submitHandler = submitHandler;
+    constructor(handler: SubmitHandler) {
+        this.submitHandler = handler;
     }
 
     async handle(req: express.Request, res: express.Response) {

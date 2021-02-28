@@ -8,8 +8,7 @@ import ModuleCommandHandler from '../model/ModuleCommandHandler';
 import TimeStampCommandHandler from '../model/TimeStampCommandHandler';
 
 export default class SubmitHandler {
-    readonly shopSubmit = 'http://localhost:34570/api/submit';
-    readonly warehouseQuery = 'http://localhost:34560/api/query';
+    readonly dbUrl = process.env.DATABASE_URL;
 
 
     handlers: Map<string, ModelCommandHandler> = new Map();
@@ -53,9 +52,12 @@ export default class SubmitHandler {
             json varchar NOT NULL,
             PRIMARY KEY (topic, id)
         );`
-        const connectionString = 'postgresql://postgres:admin@localhost:5432/timestampdb';
+        const connectionString = this.dbUrl;
         const pool = new Pool({
             connectionString,
+            ssl: {
+                rejectUnauthorized: false
+            }
         });
         try {
             const res = await pool.query(sql);
@@ -102,9 +104,12 @@ export default class SubmitHandler {
         FROM events
         WHERE topic='${topic}' AND id='${id}';`;
 
-        const connectionString = 'postgresql://postgres:admin@localhost:5432/timestampdb';
+        const connectionString = this.dbUrl;
         const pool = new Pool({
             connectionString,
+            ssl: {
+                rejectUnauthorized: false
+            }
         });
 
         try {
@@ -127,9 +132,12 @@ export default class SubmitHandler {
     }
 
     async putIntoEventStore(event: Event) {
-        const connectionString = 'postgresql://postgres:admin@localhost:5432/timestampdb';
+        const connectionString = this.dbUrl;
         const pool = new Pool({
             connectionString,
+            ssl: {
+                rejectUnauthorized: false
+            }
         });
 
         try {
@@ -166,9 +174,12 @@ export default class SubmitHandler {
         FROM events
         WHERE topic='${topic}';`;
 
-        const connectionString = 'postgresql://postgres:admin@localhost:5432/timestampdb';
+        const connectionString = this.dbUrl;
         const pool = new Pool({
             connectionString,
+            ssl: {
+                rejectUnauthorized: false
+            }
         });
 
         try {
@@ -208,9 +219,12 @@ export default class SubmitHandler {
 
     async getEventsSince(topic: string, lastknown: string): Promise<Event[]> {
         const eventList: Event[] = [];
-        const connectionString = 'postgresql://postgres:admin@localhost:5432/timestampdb';
+        const connectionString = this.dbUrl;
         const pool = new Pool({
             connectionString,
+            ssl: {
+                rejectUnauthorized: false
+            }
         });
 
         const sql = `
