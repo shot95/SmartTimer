@@ -11,7 +11,8 @@ export default class AppState {
   userName: string = '';
   date: string = '';
 
-  readonly serverURL = "http://localhost:34560";
+  //readonly serverURL = "http://localhost:34560";
+  readonly serverURL = "https://smarttimer-server.herokuapp.com";
 
   constructor() {
     this.getTimeStampsFor = this.getTimeStampsFor.bind(this);
