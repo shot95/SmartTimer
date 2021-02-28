@@ -36,7 +36,7 @@ class DailySummary extends React.Component<PageProps>{
                 const date = new Date(ts.date);
                 if (searchDate.getUTCFullYear() === date.getUTCFullYear()
                     && searchDate.getUTCMonth() === date.getUTCMonth()
-                    && searchDate.getUTCDay() === date.getUTCDay()) {
+                    && searchDate.getUTCDate() === date.getUTCDate()) {
 
                     //for each hour
                     date.setUTCMilliseconds(0);
@@ -135,6 +135,11 @@ class DailySummary extends React.Component<PageProps>{
                 <div>
                     Daily Summary for {this.props.appState.date.substring(0,10)}
                 </div>
+                <div>
+                    <Link to="/timestamps/edit">
+                        <button id="edittsButton">delete a timestamp from this day</button>
+                    </Link>
+                </div>
 
                 <div>
                     <span>Module name</span>
@@ -150,7 +155,7 @@ class DailySummary extends React.Component<PageProps>{
                                 const searchDate = new Date(this.props.appState.date);
                                 return tsDate.getUTCFullYear() === searchDate.getUTCFullYear()
                                     && tsDate.getUTCMonth() === searchDate.getUTCMonth()
-                                    && tsDate.getUTCDay() == searchDate.getUTCDay()
+                                    && tsDate.getUTCDate() === searchDate.getUTCDate()
                             }).forEach((val, ind, arr) => {
                                 sum += val.recordedTime;
                             })

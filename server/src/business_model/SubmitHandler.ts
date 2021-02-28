@@ -109,7 +109,7 @@ export default class SubmitHandler {
 
         try {
             const res = await pool.query(sql);
-            console.log(`\n\nROWS:\n${JSON.stringify(res.rows, null, 3)}\n\n`);
+            //console.log(`\n\nROWS:\n${JSON.stringify(res.rows, null, 3)}\n\n`);
             for (const row of res.rows) {
                 const jsonString = row.json;
                 const event: Event = JSON.parse(jsonString);

@@ -10,6 +10,7 @@ import axios from 'axios';
 import DailySummary from './pages/DailySummary';
 import MonthlySummary from './pages/MonthlySummary';
 import YearlySummary from './pages/YearlySummary';
+import TimestampsEdit from './pages/TimestampsEdit';
 
 class App extends React.Component {
 
@@ -57,7 +58,7 @@ class App extends React.Component {
 
   dateAction() {
     const date = $('#dateInput').val() as string;
-    const isoString = `${date.substring(6, 10)}-${date.substring(3, 5)}-${date.substring(0, 2)}T00:00:00.000Z`;
+    const isoString = `${date.substring(0, 4)}-${date.substring(5, 7)}-${date.substring(8, 10)}T00:00:00.000Z`;
     //YYYY-MM-DDTHH:mm:ss.sssZ
     this.setState({ date: isoString });
   }
@@ -74,7 +75,7 @@ class App extends React.Component {
                   {this.state.userName === '' ? <button id="userNameButton" onClick={this.enterAction}>enter</button> : null}
 
                 </div>
-                <div><input id="dateInput" placeholder="dd.mm.yyyy?" defaultValue={this.state.date} /></div>
+                <div><input id="dateInput" placeholder="dd.mm.yyyy?" defaultValue={this.state.date.substring(0,10)} /></div>
                 <div>
                   <button id="dateButton" onClick={this.dateAction}>enter date</button>
 
@@ -120,6 +121,9 @@ class App extends React.Component {
             </Route>
             <Route exact path="/yearlysummary">
               <YearlySummary appState={this.state} appSetState={this.setState} />
+            </Route>
+            <Route exact path="/timestamps/edit">
+              <TimestampsEdit appState={this.state} appSetState={this.setState} />
             </Route>
             <Route path="/">
               <Redirect to="/main" />
