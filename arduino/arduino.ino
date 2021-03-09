@@ -22,6 +22,8 @@ int led1 = 0;
 int led2 = 1;
 int led3 = 2;
 int led4 = 3;
+int interruptPower2 = A3;
+int interruptPower3 = A4;
 
 int currentMode;
 int lastMode = 1;
@@ -42,8 +44,12 @@ void setup() {
   pinMode(led3,OUTPUT);
   pinMode(led4,OUTPUT);
   pinMode(interruptPower,OUTPUT);
+  pinMode(interruptPower2,OUTPUT);
+  pinMode(interruptPower3,OUTPUT);
   prev = 0;
   digitalWrite(interruptPower,HIGH);
+  digitalWrite(interruptPower2,HIGH);
+  digitalWrite(interruptPower3,HIGH);
 
     while (status != WL_CONNECTED) {
       Serial.print("Attempting to connect to SSID: ");
@@ -91,7 +97,7 @@ void loop() {
     unsigned long diff = now - prev;
     prev = now;
     String date = timeClient.getFormattedDate();
-    int spentTime = (diff/(1000*60));
+    int spentTime = (diff/(1000));
    
   Serial.println("making POST request");
   String contentType = "application/json";
