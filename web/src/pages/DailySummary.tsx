@@ -144,8 +144,8 @@ class DailySummary extends React.Component<PageProps>{
                 <hr></hr>
 
                 <div>
-                    <span>Module name</span>
-                    <span>time</span>
+                    <span><h2>Module name</h2></span>
+                    <span><h2>time</h2></span>
                 </div>
 
                 {
@@ -163,7 +163,7 @@ class DailySummary extends React.Component<PageProps>{
                             })
                             sum /= 60;
                             return (
-                                <div key={module.id}>
+                                <div key={module.id} className="SpanSurrounder">
                                     <span>{module.name || '?'}</span>
                                     <span>{sum.toFixed(1)}min</span>
                                 </div>
