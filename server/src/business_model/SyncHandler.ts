@@ -30,7 +30,9 @@ export default class SyncHandler {
         let result = [];
         for (let event of eventList){
             const moduleDTO : ModuleDTO = event.payload;
+            if (event.state === 'registered'){
             result.push({moduleid: moduleDTO.id, buttonid: moduleDTO.buttonID});
+            }
         }
         res.json(result);
     }

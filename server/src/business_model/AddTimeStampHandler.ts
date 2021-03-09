@@ -29,14 +29,13 @@ export default class AddTimeStampHandler {
         var clientDate = new Date(clientData.date)
         const timeToFillUpHour = 60 - clientDate.getUTCMinutes()
 
-        if (timeToFillUpHour >= clientData.rectime) {
+        if (timeToFillUpHour * 60 >= clientData.rectime) {
             const lowertimeStampDTO: TimeStampDTO = {
                 id: uuidv4(),
                 date: clientDate.toISOString(),
                 module: clientData.module,
                 recordedTime: clientData.rectime
             }
-
             const lowerevent: Event = {
                 topic: `timestamps${user}`,
                 id: lowertimeStampDTO.id,
