@@ -101,7 +101,8 @@ class DailySummary extends React.Component<PageProps>{
                 title: {
                     display: true,
                     text: 'Working time per module (in minutes)'
-                }
+                },
+                responsive: true
             }
         });
         Chart.defaults.global.maintainAspectRatio = false;
@@ -133,13 +134,14 @@ class DailySummary extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Daily Summary for {this.props.appState.date.substring(0,10)}
+                    <h1>Daily Summary for {this.props.appState.date.substring(0, 10)}</h1>
                 </div>
                 <div>
                     <Link to="/timestamps/edit">
                         <button id="edittsButton">delete a timestamp from this day</button>
                     </Link>
                 </div>
+                <hr></hr>
 
                 <div>
                     <span>Module name</span>
@@ -168,8 +170,10 @@ class DailySummary extends React.Component<PageProps>{
                             );
                         })
                 }
-
-                <canvas id="myChart" width="1000" height="400"></canvas>
+                <hr></hr>
+                <div className="chart-container" style={{position: 'relative', height: '50vh', width: '80vw', marginLeft: 'auto', marginRight: 'auto'}}>
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
         );
     }
