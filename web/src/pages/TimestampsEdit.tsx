@@ -64,13 +64,14 @@ class TimestampsEdit extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Timestamps for {this.props.appState.date.substring(0, 10)}
+                    <h1>Timestamps for {this.props.appState.date.substring(0, 10)}</h1>
                 </div>
 
                 <div>
-                    <span>id</span>
-                    <span>date</span>
-                    <span>time</span>
+                    <span className="TsEdit"><h2>id</h2></span>
+                    <span className="TsEdit"><h2>date</h2></span>
+                    <span className="TsEdit"><h2>time</h2></span>
+                    <span className="TsEdit"><h2>delete</h2></span>
                 </div>
 
                 {
@@ -86,10 +87,10 @@ class TimestampsEdit extends React.Component<PageProps>{
                             }).forEach((val, ind, arr) => {
                                 sum.push(
                                     <div key={val.id}>
-                                        <span>{val.id || '?'}</span>
-                                        <span>{val.date || '?'}</span>
-                                        <span>{val.recordedTime || '?'}</span>
-                                        <span><button onClick={() => this.delete(val.id, val.module)}>delete</button></span>
+                                        <span className="TsEdit">{val.id || '?'}</span>
+                                        <span className="TsEdit">{val.date || '?'}</span>
+                                        <span className="TsEdit">{val.recordedTime || '?'}</span>
+                                        <span className="TsEdit"><button onClick={() => this.delete(val.id, val.module)}>delete</button></span>
                                     </div>
                                 )
                             })

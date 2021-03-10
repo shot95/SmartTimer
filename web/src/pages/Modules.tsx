@@ -92,18 +92,19 @@ class Modules extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    <span>Module name</span>
-                    <span>Button Id</span>
-                    <span>Modul Id</span>
+                    <span className="ModulSpan">Module name</span>
+                    <span className="ModulSpan">Button Id</span>
+                    <span className="ModulSpan">Modul Id</span>
+                    <span className="ModulSpan">delete</span>
                 </div>
                 {
                     this.props.appState.getModulesAsList().map((module) => {
                         return (
-                            <div key={module.id}>
-                                <span>{module.name || '?'}</span>
-                                <span>{module.buttonID}</span>
-                                <span>{module.id}</span>
-                                <span><button onClick={() => this.delete(module.id)}>delete</button></span>
+                            <div key={module.id} className="SpanSurrounder">
+                                <span className="ModulSpan">{module.name || '?'}</span>
+                                <span className="ModulSpan">{module.buttonID}</span>
+                                <span className="ModulSpan">{module.id}</span>
+                                <span className="ModulSpan"><button onClick={() => this.delete(module.id)}>delete</button></span>
                             </div>
                         );
                     })
