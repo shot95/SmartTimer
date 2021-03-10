@@ -1,6 +1,5 @@
 #include <WiFi101.h>
 #include <ArduinoJson.h>
-#include <ArduinoHttpClient.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 char ssid[] = "prettyflyforawifi";     
@@ -29,6 +28,7 @@ int currentMode;
 int lastMode = 1;
 unsigned long prev;
 unsigned long now;
+String date;
 NTPClient timeClient(ntpUDP);
 
 
@@ -60,10 +60,11 @@ void setup() {
       Serial.println("\nStarting connection to server...");
      
   timeClient.begin();
+  date = timeClient.getFormattedDate();
   String body;
-     StaticJsonDocument<200> doc;
-   doc["username"] = user;
-      serializeJson(doc, body);
+  StaticJsonDocument<200> doc;
+  doc["username"] = user;
+  serializeJson(doc, body);
   if (wifiClient.connect(server, 80)) {
     Serial.println("connected");
     wifiClient.println("POST /api/sync HTTP/1.1");
@@ -96,35 +97,35 @@ void loop() {
     now = millis();
     unsigned long diff = now - prev;
     prev = now;
-    String date = timeClient.getFormattedDate();
     int spentTime = (diff/(1000));
    
-  Serial.println("making POST request");
-  String contentType = "application/json";
+    Serial.println("making POST request");
+    String contentType = "application/json";
     String data;
-   StaticJsonDocument<200> doc;
-   doc["date"] = date;
-   doc["module"] = buttons[lastMode-1];
-   if(buttons[lastMode -1] == NULL) {
-    Serial.println("Button not in use");
+    StaticJsonDocument<200> doc;
+    doc["date"] = date;
+    doc["module"] = buttons[lastMode-1];
+    if(buttons[lastMode -1] == NULL) {
+      Serial.println("Button not in use");
+      lastMode = currentMode;
+      return;
+    }
+    doc["rectime"] = spentTime;
+    doc["username"] = user;
+    serializeJson(doc, data);
+    Serial.println(data);
     lastMode = currentMode;
-    return;
-   }
-   doc["rectime"] = spentTime;
-   doc["username"] = user;
-   serializeJson(doc, data);
-   Serial.println(data);
-  lastMode = currentMode;
-  if (wifiClient.connect(server, 80)) {
-    Serial.println("connected");
-    wifiClient.println("POST /api/addtimestamp HTTP/1.1");
-    wifiClient.println("Host: smarttimer-server.herokuapp.com");
-    wifiClient.println("Content-type:application/json");
-    wifiClient.println("Connection: close");
-    wifiClient.print("Content-Length: ");
-    wifiClient.println(data.length());
-    wifiClient.println();
-    wifiClient.println(data);  
+    String date = timeClient.getFormattedDate();
+    if (wifiClient.connect(server, 80)) {
+      Serial.println("connected");
+      wifiClient.println("POST /api/addtimestamp HTTP/1.1");
+      wifiClient.println("Host: smarttimer-server.herokuapp.com");
+      wifiClient.println("Content-type:application/json");
+      wifiClient.println("Connection: close");
+      wifiClient.print("Content-Length: ");
+      wifiClient.println(data.length());
+      wifiClient.println();
+      wifiClient.println(data);  
   }
   String response;
   while (wifiClient.connected()){
