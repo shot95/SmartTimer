@@ -2,6 +2,7 @@
 #include <ArduinoJson.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
+#include <RTCZero.h>
 char ssid[] = "prettyflyforawifi";     
 char pass[] = "mylittleponyranch"; 
 char user[] =  "simon";
@@ -30,6 +31,7 @@ unsigned long prev;
 unsigned long now;
 String date;
 NTPClient timeClient(ntpUDP);
+RTCZero rtc;
 
 
 void setup() {
@@ -60,7 +62,7 @@ void setup() {
       Serial.println("\nStarting connection to server...");
      
   timeClient.begin();
-  date = timeClient.getFormattedDate();
+  rtc.begin();
   String body;
   StaticJsonDocument<200> doc;
   doc["username"] = user;
@@ -88,16 +90,19 @@ void setup() {
   Serial.println("Wait 1 second");
   delay(1000);
   Serial.println("Setup Done");
+  timeClient.update();
+  date = timeClient.getFormattedDate();
+  Serial.println(date);
+  prev = rtc.getMinutes();
   isr1();
 }
 
 void loop() {
-  timeClient.update();
   if (currentMode != lastMode) {
-    now = millis();
+    now = rtc.getMinutes();
     unsigned long diff = now - prev;
     prev = now;
-    int spentTime = (diff/(1000));
+    int spentTime = diff;
    
     Serial.println("making POST request");
     String contentType = "application/json";
@@ -115,7 +120,7 @@ void loop() {
     serializeJson(doc, data);
     Serial.println(data);
     lastMode = currentMode;
-    String date = timeClient.getFormattedDate();
+
     if (wifiClient.connect(server, 80)) {
       Serial.println("connected");
       wifiClient.println("POST /api/addtimestamp HTTP/1.1");
@@ -135,6 +140,9 @@ void loop() {
     }      
   }
   Serial.println(response);
+  timeClient.update();
+  date = timeClient.getFormattedDate();
+  Serial.println(date);
   wifiClient.flush();
   wifiClient.stop();
   WiFi.end();
