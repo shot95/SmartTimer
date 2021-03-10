@@ -39,11 +39,24 @@ span {
   width: 22vw;
 }
 
+.TsEditshort {
+  width: 22vw;
+}
+
 .ModulSpan {
   width: 22vw;
 }
 
-@media only screen and (min-width: 768px) {
+.ModulSpanshort {
+  width: 22vw;
+}
+
+hr {
+  width: 90vw;
+  border-top: 2px solid #dcdcdc;
+}
+
+@media only screen and (min-width: 568px) {
   span {
     width: 250px;
   }
@@ -51,8 +64,20 @@ span {
   .TsEdit {
     width: 180px;
   }
+
+  .TsEditshort {
+    width: 70px;
+  }
   
   .ModulSpan {
     width: 180px;
+  }
+
+  .ModulSpanshort {
+    width: 90px;
+  }
+
+  hr {
+    width: 500px;
   }
 }

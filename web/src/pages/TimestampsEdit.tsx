@@ -66,12 +66,13 @@ class TimestampsEdit extends React.Component<PageProps>{
                 <div>
                     <h1>Timestamps for {this.props.appState.date.substring(0, 10)}</h1>
                 </div>
+                <hr/>
 
                 <div>
                     <span className="TsEdit"><h2>id</h2></span>
                     <span className="TsEdit"><h2>date</h2></span>
-                    <span className="TsEdit"><h2>time</h2></span>
-                    <span className="TsEdit"><h2>delete</h2></span>
+                    <span className="TsEditshort"><h2>time</h2></span>
+                    <span className="TsEditshort"><h2>delete</h2></span>
                 </div>
 
                 {
@@ -89,8 +90,8 @@ class TimestampsEdit extends React.Component<PageProps>{
                                     <div key={val.id}>
                                         <span className="TsEdit">{val.id || '?'}</span>
                                         <span className="TsEdit">{val.date || '?'}</span>
-                                        <span className="TsEdit">{val.recordedTime || '?'}</span>
-                                        <span className="TsEdit"><button onClick={() => this.delete(val.id, val.module)}>delete</button></span>
+                                        <span className="TsEditshort">{val.recordedTime || '?'}</span>
+                                        <span className="TsEditshort"><button onClick={() => this.delete(val.id, val.module)}>delete</button></span>
                                     </div>
                                 )
                             })

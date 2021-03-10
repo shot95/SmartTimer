@@ -91,11 +91,12 @@ class Modules extends React.Component<PageProps>{
                         <button id="addButton" disabled={this.props.appState.userName === ''}>Add</button>
                     </Link>
                 </div>
+                <hr/>
                 <div>
                     <span className="ModulSpan"><h2>Module name</h2></span>
                     <span className="ModulSpan"><h2>Button Id</h2></span>
-                    <span className="ModulSpan"><h2>Modul Id</h2></span>
-                    <span className="ModulSpan"><h2>delete</h2></span>
+                    <span className="ModulSpanshort"><h2>Modul Id</h2></span>
+                    <span className="ModulSpanshort"><h2>delete</h2></span>
                 </div>
                 {
                     this.props.appState.getModulesAsList().map((module) => {
@@ -103,8 +104,8 @@ class Modules extends React.Component<PageProps>{
                             <div key={module.id} className="SpanSurrounder">
                                 <span className="ModulSpan">{module.name || '?'}</span>
                                 <span className="ModulSpan">{module.buttonID}</span>
-                                <span className="ModulSpan">{module.id}</span>
-                                <span className="ModulSpan"><button onClick={() => this.delete(module.id)}>delete</button></span>
+                                <span className="ModulSpanshort">{module.id}</span>
+                                <span className="ModulSpanshort"><button onClick={() => this.delete(module.id)}>delete</button></span>
                             </div>
                         );
                     })
