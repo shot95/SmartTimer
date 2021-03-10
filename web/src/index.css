@@ -1,11 +1,9 @@
 #root {
   margin: 0;
-  width: 100%
 }
 
 body {
   margin: 0;
-  width: 100%;
   text-align: center;
   font-size: 12pt;
 }
@@ -31,7 +29,7 @@ span {
   margin-left: auto;
   margin-right: auto;
   display: inline-block;
-  width: 170px;
+  width: 45vw;
   text-align: center;
   vertical-align: middle;
   overflow-wrap: break-word;
@@ -39,9 +37,9 @@ span {
 
 
 .TsEdit {
-  width: 85px;
+  width: 22vw;
 }
 
 .ModulSpan {
-  width: 85px;
+  width: 22vw;
 }
