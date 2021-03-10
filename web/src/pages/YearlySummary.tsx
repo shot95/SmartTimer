@@ -129,6 +129,7 @@ class YearlySummary extends React.Component<PageProps>{
                 <div>
                     <h1>Yearly Summary for {this.props.appState.date.substring(0, 4)}</h1>
                 </div>
+                <hr></hr>
                 <div>
                     <span><h2>Module name</h2></span>
                     <span><h2>time</h2></span>
@@ -157,6 +158,7 @@ class YearlySummary extends React.Component<PageProps>{
                         })
                 }
 
+                <hr></hr>
                 <div className="chart-container" style={{ position: 'relative', height: '50vh', width: '80vw', marginLeft: 'auto', marginRight: 'auto' }}>
                     <canvas id="myChart"></canvas>
                 </div>

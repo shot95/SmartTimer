@@ -80,6 +80,7 @@ class App extends React.Component {
                   <button id="dateButton" onClick={this.dateAction}>enter date</button>
 
                 </div>
+                <hr></hr>
                 <div>
                   <Link to="/modules">
                     <button id="modulesButton" disabled={this.state.userName === ''}>Modules</button>
