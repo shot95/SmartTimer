@@ -35,11 +35,24 @@ span {
   overflow-wrap: break-word;
 }
 
-
 .TsEdit {
   width: 22vw;
 }
 
 .ModulSpan {
   width: 22vw;
+}
+
+@media only screen and (min-width: 768px) {
+  span {
+    width: 250px;
+  }
+
+  .TsEdit {
+    width: 180px;
+  }
+  
+  .ModulSpan {
+    width: 180px;
+  }
 }
