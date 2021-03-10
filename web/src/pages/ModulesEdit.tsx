@@ -59,7 +59,7 @@ class ModulesEdit extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    add or edit modules
+                    <h1>add or edit modules</h1>
                 </div>
                 <div>
                     <input id="moduleNameInput" placeholder="name?" disabled={this.props.appState.userName === ''}/>

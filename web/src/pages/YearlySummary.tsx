@@ -12,7 +12,7 @@ class YearlySummary extends React.Component<PageProps>{
     }
 
     async componentDidMount() {
-        
+
         if (this.props.appState.userName === '' || this.props.appState.date === '') {
             this.props.history.push('/main');
             return;
@@ -21,7 +21,7 @@ class YearlySummary extends React.Component<PageProps>{
         console.log('DailySummary.tsx didmount called');
         await this.props.appState.loadTimeStampsFromServer(this.props.appState.userName);
         this.props.appSetState({ modules: this.props.appState.modules });
-        
+
         let searchDate = new Date(this.props.appState.date);
         const datasets = this.props.appState.getModulesAsList().map((val, ind, arr) => {
             const yValues = [];
@@ -100,7 +100,8 @@ class YearlySummary extends React.Component<PageProps>{
                 title: {
                     display: true,
                     text: 'Working time per module (in working days)'
-                }
+                },
+                responsive: true
             }
         });
         Chart.defaults.global.maintainAspectRatio = false;
@@ -111,6 +112,8 @@ class YearlySummary extends React.Component<PageProps>{
         switch (color) {
             case 'blue': return '#3e95cd';
             case 'red': return '#ff2d00';
+            case 'yellow': return '#fbff00';
+            case 'green': return '#2efe2e';
             default: return '#000000';
         }
     }
@@ -124,11 +127,11 @@ class YearlySummary extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Yearly Summary for {this.props.appState.date.substring(0,4)}
+                    <h1>Yearly Summary for {this.props.appState.date.substring(0, 4)}</h1>
                 </div>
                 <div>
-                    <span>Module name</span>
-                    <span>time</span>
+                    <span><h2>Module name</h2></span>
+                    <span><h2>time</h2></span>
                 </div>
 
                 {
@@ -146,7 +149,7 @@ class YearlySummary extends React.Component<PageProps>{
                             sum /= 60;
                             sum /= 8; //8h per day
                             return (
-                                <div key={module.id}>
+                                <div key={module.id} className="SpanSurrounder">
                                     <span>{module.name || '?'}</span>
                                     <span>{sum.toFixed(1)}working Days</span>
                                 </div>
@@ -154,7 +157,9 @@ class YearlySummary extends React.Component<PageProps>{
                         })
                 }
 
-                <canvas id="myChart" width="1000" height="400"></canvas>
+                <div className="chart-container" style={{ position: 'relative', height: '50vh', width: '80vw', marginLeft: 'auto', marginRight: 'auto' }}>
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
         );
     }

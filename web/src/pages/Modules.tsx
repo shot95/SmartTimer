@@ -84,7 +84,7 @@ class Modules extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Modules
+                    <h1>Modules</h1>
                 </div>
                 <div>
                     <Link to="/modules/edit">
@@ -92,10 +92,10 @@ class Modules extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    <span className="ModulSpan">Module name</span>
-                    <span className="ModulSpan">Button Id</span>
-                    <span className="ModulSpan">Modul Id</span>
-                    <span className="ModulSpan">delete</span>
+                    <span className="ModulSpan"><h2>Module name</h2></span>
+                    <span className="ModulSpan"><h2>Button Id</h2></span>
+                    <span className="ModulSpan"><h2>Modul Id</h2></span>
+                    <span className="ModulSpan"><h2>delete</h2></span>
                 </div>
                 {
                     this.props.appState.getModulesAsList().map((module) => {

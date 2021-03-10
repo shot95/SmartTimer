@@ -113,6 +113,8 @@ class DailySummary extends React.Component<PageProps>{
         switch (color) {
             case 'blue': return '#3e95cd';
             case 'red': return '#ff2d00';
+            case 'yellow': return '#fbff00';
+            case 'green': return '#2efe2e';
             default: return '#000000';
         }
     }
