@@ -93,13 +93,13 @@ void setup() {
   timeClient.update();
   date = timeClient.getFormattedDate();
   Serial.println(date);
-  prev = rtc.getMinutes();
+  prev = rtc.getSeconds();
   isr1();
 }
 
 void loop() {
   if (currentMode != lastMode) {
-    now = rtc.getMinutes();
+    now = rtc.getSeconds();
     unsigned long diff = now - prev;
     prev = now;
     int spentTime = diff;
