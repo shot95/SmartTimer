@@ -102,7 +102,8 @@ class MonthlySummary extends React.Component<PageProps>{
                 title: {
                     display: true,
                     text: 'Working time per module (in hours)'
-                }
+                },
+                responsive: true
             }
         });
         Chart.defaults.global.maintainAspectRatio = false;
@@ -113,6 +114,8 @@ class MonthlySummary extends React.Component<PageProps>{
         switch (color) {
             case 'blue': return '#3e95cd';
             case 'red': return '#ff2d00';
+            case 'yellow': return '#fbff00';
+            case 'green': return '#2efe2e';
             default: return '#000000';
         }
     }
@@ -126,11 +129,12 @@ class MonthlySummary extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Monthly Summary for {this.props.appState.date.substring(5, 7)}
+                    <h1>Monthly Summary for {this.props.appState.date.substring(5, 7)}</h1>
                 </div>
+                <hr></hr>
                 <div>
-                    <span>Module name</span>
-                    <span>time</span>
+                    <span><h2>Module name</h2></span>
+                    <span><h2>time</h2></span>
                 </div>
 
                 {
@@ -148,15 +152,17 @@ class MonthlySummary extends React.Component<PageProps>{
                             sum /= 60;
                             sum /= 60;
                             return (
-                                <div key={module.id}>
+                                <div key={module.id} className="SpanSurrounder">
                                     <span>{module.name || '?'}</span>
                                     <span>{sum.toFixed(1)}hours</span>
                                 </div>
                             );
                         })
                 }
-
-                <canvas id="myChart" width="1000" height="400"></canvas>
+                <hr></hr>
+                <div className="chart-container" style={{ position: 'relative', height: '50vh', width: '80vw', marginLeft: 'auto', marginRight: 'auto' }}>
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
         );
     }

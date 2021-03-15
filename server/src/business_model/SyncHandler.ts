@@ -19,8 +19,8 @@ interface ClientData {
 export default class SyncHandler {
 
     submitHandler: SubmitHandler;
-    constructor(submitHandler: SubmitHandler) {
-        this.submitHandler = submitHandler;
+    constructor(handler: SubmitHandler) {
+        this.submitHandler = handler;
     }
 
     async handle(req: express.Request, res: express.Response) {
@@ -30,7 +30,9 @@ export default class SyncHandler {
         let result = [];
         for (let event of eventList){
             const moduleDTO : ModuleDTO = event.payload;
+            if (event.state === 'registered'){
             result.push({moduleid: moduleDTO.id, buttonid: moduleDTO.buttonID});
+            }
         }
         res.json(result);
     }

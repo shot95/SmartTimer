@@ -36,7 +36,7 @@ class DailySummary extends React.Component<PageProps>{
                 const date = new Date(ts.date);
                 if (searchDate.getUTCFullYear() === date.getUTCFullYear()
                     && searchDate.getUTCMonth() === date.getUTCMonth()
-                    && searchDate.getUTCDay() === date.getUTCDay()) {
+                    && searchDate.getUTCDate() === date.getUTCDate()) {
 
                     //for each hour
                     date.setUTCMilliseconds(0);
@@ -101,7 +101,8 @@ class DailySummary extends React.Component<PageProps>{
                 title: {
                     display: true,
                     text: 'Working time per module (in minutes)'
-                }
+                },
+                responsive: true
             }
         });
         Chart.defaults.global.maintainAspectRatio = false;
@@ -112,6 +113,8 @@ class DailySummary extends React.Component<PageProps>{
         switch (color) {
             case 'blue': return '#3e95cd';
             case 'red': return '#ff2d00';
+            case 'yellow': return '#fbff00';
+            case 'green': return '#2efe2e';
             default: return '#000000';
         }
     }
@@ -133,12 +136,18 @@ class DailySummary extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    Daily Summary for {this.props.appState.date.substring(0,10)}
+                    <h1>Daily Summary for {this.props.appState.date.substring(0, 10)}</h1>
                 </div>
+                <div>
+                    <Link to="/timestamps/edit">
+                        <button id="edittsButton">delete a timestamp from this day</button>
+                    </Link>
+                </div>
+                <hr></hr>
 
                 <div>
-                    <span>Module name</span>
-                    <span>time</span>
+                    <span><h2>Module name</h2></span>
+                    <span><h2>time</h2></span>
                 </div>
 
                 {
@@ -150,21 +159,23 @@ class DailySummary extends React.Component<PageProps>{
                                 const searchDate = new Date(this.props.appState.date);
                                 return tsDate.getUTCFullYear() === searchDate.getUTCFullYear()
                                     && tsDate.getUTCMonth() === searchDate.getUTCMonth()
-                                    && tsDate.getUTCDay() == searchDate.getUTCDay()
+                                    && tsDate.getUTCDate() === searchDate.getUTCDate()
                             }).forEach((val, ind, arr) => {
                                 sum += val.recordedTime;
                             })
                             sum /= 60;
                             return (
-                                <div key={module.id}>
+                                <div key={module.id} className="SpanSurrounder">
                                     <span>{module.name || '?'}</span>
                                     <span>{sum.toFixed(1)}min</span>
                                 </div>
                             );
                         })
                 }
-
-                <canvas id="myChart" width="1000" height="400"></canvas>
+                <hr></hr>
+                <div className="chart-container" style={{position: 'relative', height: '50vh', width: '80vw', marginLeft: 'auto', marginRight: 'auto'}}>
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
         );
     }

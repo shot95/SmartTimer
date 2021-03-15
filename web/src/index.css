@@ -1,23 +1,83 @@
-body {
+#root {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  text-align: center;
+  font-size: 12pt;
+}
+
+h1 {
+  font-size: 15pt;
+}
+
+h2 {
+  font-size: 13pt;
+}
+
+.SpanSurrounder {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 div {
-  margin: 12px;
+  margin: 12px 0px;
 }
 
 span {
+  margin-left: auto;
+  margin-right: auto;
   display: inline-block;
-  width: 100px;
+  width: 45vw;
   text-align: center;
+  vertical-align: middle;
+  overflow-wrap: break-word;
+}
+
+.TsEdit {
+  width: 22vw;
+}
+
+.TsEditshort {
+  width: 22vw;
+}
+
+.ModulSpan {
+  width: 22vw;
+}
+
+.ModulSpanshort {
+  width: 22vw;
+}
+
+hr {
+  width: 90vw;
+  border-top: 2px solid #dcdcdc;
+}
+
+@media only screen and (min-width: 568px) {
+  span {
+    width: 250px;
+  }
+
+  .TsEdit {
+    width: 180px;
+  }
+
+  .TsEditshort {
+    width: 70px;
+  }
+  
+  .ModulSpan {
+    width: 180px;
+  }
+
+  .ModulSpanshort {
+    width: 90px;
+  }
+
+  hr {
+    width: 500px;
+  }
 }

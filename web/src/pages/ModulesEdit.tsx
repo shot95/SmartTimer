@@ -44,7 +44,7 @@ class ModulesEdit extends React.Component<PageProps>{
             payload: moduleDTO,
         };
 
-        const res = await axios.post("http://localhost:34560/api/submit", event);
+        const res = await axios.post(this.props.appState.serverURL + "/api/submit", event);
         console.log(`respnse: ${res.status}`);
 
         this.props.history.push('/modules');
@@ -59,8 +59,9 @@ class ModulesEdit extends React.Component<PageProps>{
                     </Link>
                 </div>
                 <div>
-                    add or edit modules
+                    <h1>add or edit modules</h1>
                 </div>
+                <hr/>
                 <div>
                     <input id="moduleNameInput" placeholder="name?" disabled={this.props.appState.userName === ''}/>
                 </div>

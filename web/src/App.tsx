@@ -10,6 +10,7 @@ import axios from 'axios';
 import DailySummary from './pages/DailySummary';
 import MonthlySummary from './pages/MonthlySummary';
 import YearlySummary from './pages/YearlySummary';
+import TimestampsEdit from './pages/TimestampsEdit';
 
 class App extends React.Component {
 
@@ -20,10 +21,10 @@ class App extends React.Component {
     this.setState = this.setState.bind(this);
     this.enterAction = this.enterAction.bind(this);
     this.dateAction = this.dateAction.bind(this);
-    this.newData = this.newData.bind(this);
+    //this.newData = this.newData.bind(this);
   }
 
-  async newData() {
+  /*async newData() {
     for (let months = 3; months < 11; months++) {
       for (let days = 1; days < 29; days++) {
         for (let hrs = 7; hrs < 16; hrs++) {
@@ -43,7 +44,7 @@ class App extends React.Component {
         }
       }
     }
-  }
+  }*/
   pad(num: number, size: number): string {
     let s = num + "";
     while (s.length < size) s = "0" + s;
@@ -57,7 +58,7 @@ class App extends React.Component {
 
   dateAction() {
     const date = $('#dateInput').val() as string;
-    const isoString = `${date.substring(6, 10)}-${date.substring(3, 5)}-${date.substring(0, 2)}T00:00:00.000Z`;
+    const isoString = `${date.substring(0, 4)}-${date.substring(5, 7)}-${date.substring(8, 10)}T00:00:00.000Z`;
     //YYYY-MM-DDTHH:mm:ss.sssZ
     this.setState({ date: isoString });
   }
@@ -74,15 +75,12 @@ class App extends React.Component {
                   {this.state.userName === '' ? <button id="userNameButton" onClick={this.enterAction}>enter</button> : null}
 
                 </div>
-                <div><input id="dateInput" placeholder="dd.mm.yyyy?" defaultValue={this.state.date} /></div>
+                <div><input id="dateInput" placeholder="yyyy.mm.dd?" defaultValue={this.state.date.substring(0,10)} /></div>
                 <div>
                   <button id="dateButton" onClick={this.dateAction}>enter date</button>
 
                 </div>
-                <div>
-                  <button id="newDataButton" onClick={this.newData}>new data</button>
-
-                </div>
+                <hr></hr>
                 <div>
                   <Link to="/modules">
                     <button id="modulesButton" disabled={this.state.userName === ''}>Modules</button>
@@ -120,6 +118,9 @@ class App extends React.Component {
             </Route>
             <Route exact path="/yearlysummary">
               <YearlySummary appState={this.state} appSetState={this.setState} />
+            </Route>
+            <Route exact path="/timestamps/edit">
+              <TimestampsEdit appState={this.state} appSetState={this.setState} />
             </Route>
             <Route path="/">
               <Redirect to="/main" />
